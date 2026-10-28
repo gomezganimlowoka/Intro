@@ -1,0 +1,522 @@
+/* ==========================================================
+   Forge Gym: base styles (navigation + footer)
+   ========================================================== */
+
+:root {
+  --black: #000;
+  --white: #fff;
+  --grey: #9a9a9a;
+  --line: rgba(255, 255, 255, .22);
+  --nav-h: 64px;
+  --pad: clamp(16px, 3vw, 40px);
+  --font-display: "Unbounded", "Arial Black", sans-serif;
+  --font-body: "Manrope", "Helvetica Neue", Arial, sans-serif;
+}
+
+/* ---------- Reset / base ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-padding-top: var(--nav-h); }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--black);
+  color: var(--white);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+body.menu-open { overflow: hidden; }
+
+main { flex: 1 0 auto; }
+
+a { color: inherit; text-decoration: none; }
+ul { list-style: none; margin: 0; padding: 0; }
+
+:focus-visible { outline: 2px solid var(--white); outline-offset: 3px; }
+
+.skip-link {
+  position: absolute;
+  left: var(--pad);
+  top: -60px;
+  z-index: 100;
+  padding: 8px 14px;
+  background: var(--white);
+  color: var(--black);
+  font-weight: 600;
+}
+.skip-link:focus { top: 8px; }
+
+/* ---------- Wordmark ---------- */
+.wordmark {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(20px, 2.4vw, 28px);
+  letter-spacing: .32em;
+  padding-left: .32em;           /* balances trailing letter-spacing */
+  text-transform: uppercase;
+}
+
+/* ---------- Navigation ---------- */
+.site-nav {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  height: var(--nav-h);
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  padding: 0 var(--pad);
+  background: var(--black);
+  border-bottom: 1px solid var(--line);
+}
+
+.nav-group {
+  display: flex;
+  align-items: center;
+  gap: clamp(16px, 2.4vw, 34px);
+}
+.nav-group--right { justify-content: flex-end; }
+
+.nav-link {
+  padding: 6px 0;
+  border-bottom: 1px solid transparent;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  transition: border-color .2s;
+}
+.nav-link:hover,
+.nav-link[aria-current="page"] { border-bottom-color: var(--white); }
+
+.nav-cta {
+  padding: 9px 18px;
+  border: 1px solid var(--white);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  transition: background .2s, color .2s;
+}
+.nav-cta:hover { background: var(--white); color: var(--black); }
+
+.logout-form { margin: 0; }
+.logout-form button {
+  background: none;
+  border: 0;
+  border-bottom: 1px solid transparent;
+  color: inherit;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+/* Mobile toggle + menu (hidden on desktop) */
+.menu-toggle {
+  display: none;
+  grid-column: 3;
+  justify-self: end;
+  padding: 8px 12px;
+  background: none;
+  border: 1px solid var(--line);
+  color: var(--white);
+  cursor: pointer;
+  font: 600 11px/1 var(--font-body);
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+
+.mobile-menu { display: none; }
+
+@media (max-width: 860px) {
+  .nav-group { display: none; }
+  .wordmark { grid-column: 2; }
+  .menu-toggle { display: inline-block; }
+
+  .mobile-menu {
+    position: fixed;
+    inset: var(--nav-h) 0 0 0;
+    z-index: 40;
+    flex-direction: column;
+    padding: 24px var(--pad) 40px;
+    overflow-y: auto;
+    background: var(--black);
+  }
+  .mobile-menu.is-open { display: flex; }
+
+  .mobile-menu a,
+  .mobile-menu button {
+    display: block;
+    width: 100%;
+    padding: 18px 0;
+    background: none;
+    border: 0;
+    border-bottom: 1px solid var(--line);
+    color: var(--white);
+    cursor: pointer;
+    font: 500 22px/1.2 var(--font-display);
+    text-align: left;
+  }
+}
+
+/* ---------- Footer ---------- */
+.site-footer {
+  flex-shrink: 0;
+  padding: clamp(40px, 6vw, 72px) var(--pad) 28px;
+  background: var(--black);
+  border-top: 1px solid var(--line);
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1.4fr repeat(3, 1fr);
+  gap: 40px;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.footer-brand .wordmark { display: inline-block; padding-left: 0; }
+.footer-brand p {
+  max-width: 30ch;
+  margin: 16px 0 0;
+  color: var(--grey);
+  font-size: 14px;
+}
+
+.footer-col h2 {
+  margin: 0 0 14px;
+  color: var(--grey);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+.footer-col li + li { margin-top: 8px; }
+.footer-col a {
+  border-bottom: 1px solid transparent;
+  font-size: 14px;
+  transition: border-color .2s;
+}
+.footer-col a:hover { border-bottom-color: var(--white); }
+
+.footer-base {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 12px 24px;
+  max-width: 1280px;
+  margin: clamp(32px, 5vw, 56px) auto 0;
+  padding-top: 20px;
+  border-top: 1px solid var(--line);
+  color: var(--grey);
+  font-size: 13px;
+}
+.footer-legal { display: flex; gap: 24px; }
+.footer-legal a:hover { color: var(--white); }
+
+@media (max-width: 860px) {
+  .footer-grid { grid-template-columns: 1fr 1fr; }
+  .footer-brand { grid-column: 1 / -1; }
+}
+
+/* ---------- Accessibility ---------- */
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; }
+}
+
+/* ==========================================================
+   Forge Gym: login + registration pages
+   ========================================================== */
+
+.auth {
+  min-height: calc(100vh - var(--nav-h));
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: clamp(40px, 8vw, 96px) var(--pad);
+}
+
+.auth-card { width: 100%; max-width: 460px; }
+
+.auth-eyebrow {
+  margin: 0 0 12px;
+  color: var(--grey);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+
+.auth-title {
+  margin: 0 0 36px;
+  font-family: var(--font-display);
+  font-size: clamp(32px, 6vw, 48px);
+  font-weight: 600;
+  line-height: 1.05;
+  text-transform: uppercase;
+}
+
+/* ---------- Form ---------- */
+.auth-form { display: flex; flex-direction: column; gap: 20px; }
+
+.field-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+@media (max-width: 520px) { .field-row { grid-template-columns: 1fr; } }
+
+.field { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+
+.field label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+
+.field-input {
+  width: 100%;
+  padding: 14px 16px;
+  background: transparent;
+  border: 1px solid var(--line);
+  border-radius: 0;
+  color: var(--white);
+  font: 500 16px/1.4 var(--font-body);
+  transition: border-color .2s;
+}
+.field-input::placeholder { color: #666; }
+.field-input:hover { border-color: rgba(255, 255, 255, .5); }
+.field-input:focus { outline: none; border-color: var(--white); }
+
+/* Keep browser autofill dark instead of pale yellow/blue */
+.field-input:-webkit-autofill,
+.field-input:-webkit-autofill:focus {
+  -webkit-text-fill-color: var(--white);
+  box-shadow: 0 0 0 1000px var(--black) inset;
+  caret-color: var(--white);
+}
+
+.field-help { color: var(--grey); font-size: 12px; line-height: 1.5; }
+.field-help ul { margin: 0; padding-left: 16px; list-style: disc; }
+
+.field-error { margin: 0; color: #ff6b6b; font-size: 13px; }
+.has-error .field-input { border-color: #ff6b6b; }
+
+.auth-alert {
+  padding: 12px 16px;
+  border: 1px solid #ff6b6b;
+  color: #ff6b6b;
+  font-size: 14px;
+}
+.auth-alert p { margin: 0; }
+
+/* ---------- Button + switch link ---------- */
+.btn-primary {
+  margin-top: 8px;
+  padding: 16px 24px;
+  background: var(--white);
+  border: 1px solid var(--white);
+  color: var(--black);
+  cursor: pointer;
+  font: 600 12px/1 var(--font-body);
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  transition: background .2s, color .2s;
+}
+.btn-primary:hover { background: var(--black); color: var(--white); }
+
+.auth-switch { margin: 28px 0 0; color: var(--grey); font-size: 14px; }
+.auth-switch a { color: var(--white); border-bottom: 1px solid var(--white); }
+
+/* ==========================================================
+   Footer
+   ========================================================== */
+.site-footer {
+  padding: clamp(40px, 6vw, 72px) var(--pad) 28px;
+  background: var(--black);
+  border-top: 1px solid var(--line);
+}
+ 
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr;
+  gap: 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+ 
+.footer-logo {
+  display: inline-block;
+  font-family: var(--font-display);
+  font-size: 24px;
+  letter-spacing: .32em;
+  text-transform: uppercase;
+}
+ 
+.footer-brand p {
+  max-width: 32ch;
+  margin: 16px 0 24px;
+  color: var(--grey);
+  font-size: 14px;
+}
+ 
+.footer-btn {
+  display: inline-block;
+  padding: 14px 28px;
+  border: 1px solid var(--white);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  transition: background .2s, color .2s;
+}
+.footer-btn:hover { background: var(--white); color: var(--black); }
+ 
+.footer-col h2 {
+  margin: 0 0 14px;
+  color: var(--grey);
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .14em;
+}
+ 
+.footer-col address {
+  font-style: normal;
+  font-size: 14px;
+  line-height: 1.8;
+}
+ 
+.footer-col li + li { margin-top: 8px; }
+ 
+.footer-col li a {
+  border-bottom: 1px solid transparent;
+  font-size: 14px;
+  transition: border-color .2s;
+}
+.footer-col li a:hover { border-bottom-color: var(--white); }
+ 
+.footer-base {
+  max-width: 1200px;
+  margin: clamp(32px, 5vw, 56px) auto 0;
+  padding-top: 20px;
+  border-top: 1px solid var(--line);
+  color: var(--grey);
+  font-size: 13px;
+}
+ 
+@media (max-width: 760px) {
+  .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+}
+
+
+/* ==========================================================
+   Forge Gym: login + registration pages
+   ========================================================== */
+
+.auth {
+  min-height: calc(100vh - var(--nav-h));
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: clamp(40px, 8vw, 96px) var(--pad);
+}
+
+.auth-card { width: 100%; max-width: 460px; }
+
+.auth-eyebrow {
+  margin: 0 0 12px;
+  color: var(--grey);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+
+.auth-title {
+  margin: 0 0 36px;
+  font-family: var(--font-display);
+  font-size: clamp(32px, 6vw, 48px);
+  font-weight: 600;
+  line-height: 1.05;
+  text-transform: uppercase;
+}
+
+/* ---------- Form ---------- */
+.auth-form { display: flex; flex-direction: column; gap: 20px; }
+
+.field-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+@media (max-width: 520px) { .field-row { grid-template-columns: 1fr; } }
+
+.field { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+
+.field label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+
+.field-input {
+  width: 100%;
+  padding: 14px 16px;
+  background: transparent;
+  border: 1px solid var(--line);
+  border-radius: 0;
+  color: var(--white);
+  font: 500 16px/1.4 var(--font-body);
+  transition: border-color .2s;
+}
+.field-input::placeholder { color: #666; }
+.field-input:hover { border-color: rgba(255, 255, 255, .5); }
+.field-input:focus { outline: none; border-color: var(--white); }
+
+/* Keep browser autofill dark instead of pale yellow/blue */
+.field-input:-webkit-autofill,
+.field-input:-webkit-autofill:focus {
+  -webkit-text-fill-color: var(--white);
+  box-shadow: 0 0 0 1000px var(--black) inset;
+  caret-color: var(--white);
+}
+
+.field-help { color: var(--grey); font-size: 12px; line-height: 1.5; }
+.field-help ul { margin: 0; padding-left: 16px; list-style: disc; }
+
+.field-error { margin: 0; color: #ff6b6b; font-size: 13px; }
+.has-error .field-input { border-color: #ff6b6b; }
+
+.auth-alert {
+  padding: 12px 16px;
+  border: 1px solid #ff6b6b;
+  color: #ff6b6b;
+  font-size: 14px;
+}
+.auth-alert p { margin: 0; }
+
+/* ---------- Button + switch link ---------- */
+.btn-primary {
+  margin-top: 8px;
+  padding: 16px 24px;
+  background: var(--white);
+  border: 1px solid var(--white);
+  color: var(--black);
+  cursor: pointer;
+  font: 600 12px/1 var(--font-body);
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  transition: background .2s, color .2s;
+}
+.btn-primary:hover { background: var(--black); color: var(--white); }
+
+.auth-switch { margin: 28px 0 0; color: var(--grey); font-size: 14px; }
+.auth-switch a { color: var(--white); border-bottom: 1px solid var(--white); }

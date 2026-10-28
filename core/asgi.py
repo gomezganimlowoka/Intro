@@ -1,0 +1,23 @@
+"""
+Purpose: Provides an ASGI application for deployment to compatible application servers.
+ASGI stands for Asynchronous Server Gateway Interface.
+It is particularly useful when working with asynchronous
+request handling and technologies such as Django Channels for WebSockets.
+"""
+
+"""
+ASGI config for core project.
+
+It exposes the ASGI callable as a module-level variable named ``application``.
+
+For more information on this file, see
+https://docs.djangoproject.com/en/6.1/howto/deployment/asgi/
+"""
+
+import os
+
+from django.core.asgi import get_asgi_application
+
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'core.settings')
+
+application = get_asgi_application()

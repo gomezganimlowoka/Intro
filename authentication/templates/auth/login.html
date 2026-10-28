@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Log in{% endblock %}
+{% block meta_description %}Log in to track your subscription and routines.{% endblock %}
+
+{% block extra_head %}
+  <link rel="stylesheet" href="{% static 'CSS/style.css' %}">
+{% endblock %}
+
+{% block content %}
+<section class="auth">
+  <div class="auth-card">
+    <p class="auth-eyebrow">Member access</p>
+    <h1 class="auth-title">Log in</h1>
+
+    <form class="auth-form" method="post" novalidate>
+      {% csrf_token %}
+
+    
+    </form>
+
+    <p class="auth-switch">
+      Not a member yet? <a href="{% url 'register' %}">Join now</a>
+    </p>
+  </div>
+</section>
+{% endblock %}

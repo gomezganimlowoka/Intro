@@ -3,7 +3,7 @@
    ========================================================== */
 
 :root {
-  --black: #000;
+  --black: #5c5858;
   --white: #fff;
   --grey: #9a9a9a;
   --line: rgba(255, 255, 255, .22);
@@ -520,3 +520,250 @@ ul { list-style: none; margin: 0; padding: 0; }
 
 .auth-switch { margin: 28px 0 0; color: var(--grey); font-size: 14px; }
 .auth-switch a { color: var(--white); border-bottom: 1px solid var(--white); }
+
+/* ==========================================================
+   Forge Gym: home page
+   (uses the variables defined in style.css)
+   ========================================================== */
+
+/* ---------- Hero with background image ---------- */
+.hero {
+  min-height: calc(100vh - var(--nav-h));
+  display: flex;
+  align-items: center;
+  padding: clamp(48px, 8vw, 96px) var(--pad);
+  /* Your gym photo with a dark overlay so the text stays readable */
+  background:
+    linear-gradient(90deg, rgba(0, 0, 0, .8) 0%, rgba(0, 0, 0, .45) 55%, rgba(0, 0, 0, .25) 100%),
+    url("../images/home.png") center / cover no-repeat;
+}
+
+.hero-inner { width: 100%; max-width: 1200px; margin: 0 auto; }
+
+.hero-eyebrow {
+  margin: 0 0 20px;
+  color: var(--grey);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+
+.hero-title {
+  margin: 0 0 24px;
+  font-size: clamp(48px, 11vw, 120px);
+  line-height: .98;
+}
+
+.hero-text {
+  max-width: 44ch;
+  margin: 0 0 36px;
+  color: rgba(255, 255, 255, .8);
+  font-size: clamp(16px, 2vw, 18px);
+}
+
+.hero-actions { display: flex; flex-wrap: wrap; gap: 14px; }
+
+/* ---------- Buttons ---------- */
+.btn {
+  display: inline-block;
+  padding: 16px 32px;
+  border: 1px solid var(--white);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  transition: background .2s, color .2s;
+}
+.btn-solid { background: var(--white); color: var(--black); }
+.btn-solid:hover { background: transparent; color: var(--white); }
+.btn-outline { background: transparent; color: var(--white); }
+.btn-outline:hover { background: var(--white); color: var(--black); }
+
+/* ---------- Features ---------- */
+.features {
+  padding: clamp(48px, 8vw, 96px) var(--pad);
+  border-top: 1px solid var(--line);
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.feature-num {
+  display: block;
+  margin-bottom: 16px;
+  color: var(--grey);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .14em;
+}
+
+.feature h2 { margin: 0 0 12px; font-size: clamp(20px, 2.4vw, 26px); }
+.feature p { max-width: 32ch; margin: 0; color: var(--grey); font-size: 15px; }
+
+@media (max-width: 760px) {
+  .features-grid { grid-template-columns: 1fr; gap: 32px; }
+  .hero-actions .btn { flex: 1 1 100%; text-align: center; }
+}
+
+/* ==========================================================
+   Forge Gym: login + registration pages
+   (uses the variables defined in style.css)
+   ========================================================== */
+
+/* ---------- Split layout ---------- */
+.auth {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: start;
+  min-height: calc(100vh - var(--nav-h));
+}
+
+/* Left: gym photo */
+.auth-visual {
+  position: sticky;
+  top: var(--nav-h);
+  height: calc(100vh - var(--nav-h));
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: clamp(24px, 4vw, 56px);
+  background:
+    linear-gradient(0deg, rgba(0, 0, 0, .85) 0%, rgba(0, 0, 0, .35) 60%, rgba(0, 0, 0, .2) 100%),
+    url("../images/gym-bg.png") center / cover no-repeat;
+}
+
+.auth-visual-eyebrow {
+  margin: 0 0 16px;
+  color: var(--grey);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+
+.auth-visual-title {
+  margin: 0 0 20px;
+  font-family: var(--font-display);
+  font-size: clamp(36px, 5vw, 64px);
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.auth-visual-text {
+  max-width: 36ch;
+  margin: 0;
+  color: rgba(255, 255, 255, .8);
+  font-size: 15px;
+}
+
+/* Right: form */
+.auth-panel {
+  display: flex;
+  justify-content: center;
+  padding: clamp(40px, 7vw, 88px) var(--pad);
+}
+
+.auth-card { width: 100%; max-width: 440px; }
+
+.auth-title {
+  margin: 0 0 10px;
+  font-size: clamp(32px, 5vw, 44px);
+}
+
+.auth-sub { margin: 0 0 32px; color: var(--grey); font-size: 15px; }
+
+/* ---------- Form ---------- */
+.auth-form { display: flex; flex-direction: column; gap: 20px; }
+
+.field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+
+.field { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+
+.field label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+
+.field-input {
+  width: 100%;
+  padding: 14px 16px;
+  background: transparent;
+  border: 1px solid var(--line);
+  border-radius: 0;
+  color: var(--white);
+  font-size: 16px;
+  line-height: 1.4;
+  transition: border-color .2s;
+}
+.field-input::placeholder { color: #666; }
+.field-input:hover { border-color: rgba(255, 255, 255, .5); }
+.field-input:focus { outline: none; border-color: var(--white); }
+
+/* Keep browser autofill dark instead of pale yellow/blue */
+.field-input:-webkit-autofill,
+.field-input:-webkit-autofill:focus {
+  -webkit-text-fill-color: var(--white);
+  box-shadow: 0 0 0 1000px var(--black) inset;
+  caret-color: var(--white);
+}
+
+.field-help { color: var(--grey); font-size: 12px; line-height: 1.5; }
+.field-help ul { margin: 0; padding-left: 16px; list-style: disc; }
+
+.field-error { margin: 0; color: #ff6b6b; font-size: 13px; }
+.has-error .field-input { border-color: #ff6b6b; }
+
+.auth-alert {
+  padding: 12px 16px;
+  border: 1px solid #ff6b6b;
+  color: #ff6b6b;
+  font-size: 14px;
+}
+.auth-alert p { margin: 0; }
+
+/* ---------- Button + switch link ---------- */
+.btn-primary {
+  margin-top: 8px;
+  padding: 16px 24px;
+  background: var(--white);
+  border: 1px solid var(--white);
+  color: var(--black);
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  transition: background .2s, color .2s;
+}
+.btn-primary:hover { background: var(--black); color: var(--white); }
+
+.auth-switch { margin: 28px 0 0; color: var(--grey); font-size: 14px; }
+.auth-switch a { color: var(--white); border-bottom: 1px solid var(--white); }
+
+/* ---------- Tablet / phone: photo becomes a banner on top ---------- */
+@media (max-width: 860px) {
+  .auth { grid-template-columns: 1fr; }
+
+  .auth-visual {
+    position: static;
+    height: auto;
+    min-height: 220px;
+    padding: 28px var(--pad);
+  }
+  .auth-visual-title br { display: none; }
+  .auth-visual-title { font-size: clamp(28px, 8vw, 40px); margin-bottom: 0; }
+  .auth-visual-text { display: none; }
+}
+
+@media (max-width: 520px) {
+  .field-row { grid-template-columns: 1fr; }
+}

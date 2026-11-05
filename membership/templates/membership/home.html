@@ -1,16 +1,53 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %}Log in{% endblock %}
-{% block meta_description %}Log in to track your subscription and routines.{% endblock %}
-
-{% block extra_head %}
-  <link rel="stylesheet" href="{% static 'CSS/style.css' %}">
-{% endblock %}
-
+{% block title %}Home{% endblock %}
+s
 {% block content %}
-<section >
 
+{# ---------- Hero ---------- #}
+<section class="hero">
+  <div class="hero-inner">
+    <p class="hero-eyebrow">Gym membership, simplified</p>
+    <h1 class="hero-title">Train.<br>Track.<br>Renew.</h1>
+    <p class="hero-text">
+      Keep an eye on your subscription and follow your training routines,
+      all in one place.
+    </p>
+
+    <div class="hero-actions">
+      {% if user.is_authenticated %}
+        <a class="btn btn-solid" href="#">My routines</a>        {# TODO: {% url 'routines' %} #}
+        <a class="btn btn-outline" href="#">My subscription</a>  {# TODO: {% url 'subscription' %} #}
+      {% else %}
+        <a class="btn btn-solid" href="{% url 'register' %}">Join now</a>
+        <a class="btn btn-outline" href="#">View plans</a>       {# TODO: {% url 'plans' %} #}
+      {% endif %}
+    </div>
+  </div>
 </section>
-  
+
+{# ---------- What members get ---------- #}
+<section class="features" id="features">
+  <div class="features-grid">
+    <article class="feature">
+      <span class="feature-num">01</span>
+      <h2>Subscription</h2>
+      <p>See your current plan, when it started and when it needs renewing.</p>
+    </article>
+
+    <article class="feature">
+      <span class="feature-num">02</span>
+      <h2>Routines</h2>
+      <p>Keep your workouts organised and know what you are training today.</p>
+    </article>
+
+    <article class="feature">
+      <span class="feature-num">03</span>
+      <h2>Your account</h2>
+      <p>Log in from any device to check your details whenever you need to.</p>
+    </article>
+  </div>
+</section>
+
 {% endblock %}

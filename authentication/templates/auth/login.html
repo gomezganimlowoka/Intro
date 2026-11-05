@@ -1,28 +1,53 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %}Log in{% endblock %}
-{% block meta_description %}Log in to track your subscription and routines.{% endblock %}
+{% block title %}Join now{% endblock %}
 
 {% block extra_head %}
-  <link rel="stylesheet" href="{% static 'CSS/style.css' %}">
+  <link rel="stylesheet" href="{% static 'CSS/auth.css' %}">
 {% endblock %}
 
 {% block content %}
 <section class="auth">
-  <div class="auth-card">
-    <p class="auth-eyebrow">Member access</p>
-    <h1 class="auth-title">Log in</h1>
 
-    <form class="auth-form" method="post" novalidate>
-      {% csrf_token %}
+  <aside class="auth-visual">
+    <p class="auth-visual-eyebrow">Become a member</p>
+    <p class="auth-visual-title">Start<br>training<br>today.</p>
+    <p class="auth-visual-text">Create your account to follow your routines and keep track of your subscription.</p>
+  </aside>
 
-    
-    </form>
+  <div class="auth-panel">
+    <div class="auth-card">
+      <h1 class="auth-title">Join now</h1>
+      <p class="auth-sub">It only takes a minute to create your account.</p>
 
-    <p class="auth-switch">
-      Not a member yet? <a href="{% url 'register' %}">Join now</a>
-    </p>
+      <form class="auth-form" method="post" novalidate>
+        {% csrf_token %}
+
+        {% if form.non_field_errors %}
+          <div class="auth-alert" role="alert">
+            {% for error in form.non_field_errors %}<p>{{ error }}</p>{% endfor %}
+          </div>
+        {% endif %}
+
+        <div class="field-row">
+          {% include "partials/form_field.html" with field=form.first_name %}
+          {% include "partials/form_field.html" with field=form.last_name %}
+        </div>
+
+        {% include "partials/form_field.html" with field=form.email %}
+        {% include "partials/form_field.html" with field=form.username %}
+        {% include "partials/form_field.html" with field=form.password1 %}
+        {% include "partials/form_field.html" with field=form.password2 %}
+
+        <button class="btn-primary" type="submit">Create account</button>
+      </form>
+
+      <p class="auth-switch">
+        Already a member? <a href="{% url 'login' %}">Log in</a>
+      </p>
+    </div>
   </div>
+
 </section>
 {% endblock %}

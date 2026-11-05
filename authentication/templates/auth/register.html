@@ -1,104 +1,118 @@
+
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %}Join now{% endblock %}
+{% block title %}Create Account{% endblock %}
 
 {% block extra_head %}
-  <link rel="stylesheet" href="{% static 'CSS/auth.css' %}">
+<link rel="stylesheet" href="{% static 'CSS/auth.css' %}">
 {% endblock %}
 
 {% block content %}
+
 <section class="auth">
 
-  <aside class="auth-visual">
-    <p class="auth-visual-eyebrow">Become a member</p>
-    <p class="auth-visual-title">Start<br>training<br>today.</p>
-    <p class="auth-visual-text">Create your account to follow your routines and keep track of your subscription.</p>
-  </aside>
+    <aside class="auth-visual">
+        <p class="auth-visual-eyebrow">Become a member</p>
 
-  <div class="auth-panel">
-    <div class="auth-card">
-      <h1 class="auth-title">Join now</h1>
-      <p class="auth-sub">It only takes a minute to create your account.</p>
+        <p class="auth-visual-title">
+            Start<br>
+            training<br>
+            today.
+        </p>
 
-      <form class="auth-form" method="post" novalidate>
-        {% csrf_token %}
+        <p class="auth-visual-text">
+            Create your account to follow your routines
+            and keep track of your subscription.
+        </p>
+    </aside>
 
-        {% if form.non_field_errors %}
-          <div class="auth-alert" role="alert">
-            {% for error in form.non_field_errors %}<p>{{ error }}</p>{% endfor %}
-          </div>
-        {% endif %}
+    <div class="auth-panel">
+        <div class="auth-card">
 
-        <div class="field-row">
-          <div class="field{% if form.first_name.errors %} has-error{% endif %}">
-            <label for="{{ form.first_name.id_for_label }}">{{ form.first_name.label }}</label>
-            {{ form.first_name }}
-            {% for error in form.first_name.errors %}
-              <p class="field-error" role="alert">{{ error }}</p>
-            {% endfor %}
-          </div>
+            <h1 class="auth-title">Join now</h1>
 
-          <div class="field{% if form.last_name.errors %} has-error{% endif %}">
-            <label for="{{ form.last_name.id_for_label }}">{{ form.last_name.label }}</label>
-            {{ form.last_name }}
-            {% for error in form.last_name.errors %}
-              <p class="field-error" role="alert">{{ error }}</p>
-            {% endfor %}
-          </div>
+            <p class="auth-sub">
+                It only takes a minute to create your account.
+            </p>
+
+            <form class="auth-form" method="POST">
+                {% csrf_token %}
+
+                {% if form.non_field_errors %}
+                    <div class="auth-alert" role="alert">
+                        {% for error in form.non_field_errors %}
+                            <p>{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
+                <div class="field-row">
+
+                    {% for field in form %}
+                        {% if field.name == "first_name" or field.name == "last_name" %}
+                            <div class="field {% if field.errors %}has-error{% endif %}">
+
+                                <label for="{{ field.id_for_label }}">
+                                    {{ field.label }}
+                                </label>
+
+                                {{ field }}
+
+                                {% for error in field.errors %}
+                                    <p class="field-error" role="alert">
+                                        {{ error }}
+                                    </p>
+                                {% endfor %}
+
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+
+                </div>
+
+                {% for field in form %}
+                    {% if field.name != "first_name" and field.name != "last_name" %}
+
+                        <div class="field {% if field.errors %}has-error{% endif %}">
+
+                            <label for="{{ field.id_for_label }}">
+                                {{ field.label }}
+                            </label>
+
+                            {{ field }}
+
+                            {% if field.name == "password1" and field.help_text %}
+                                <div class="field-help">
+                                    {{ field.help_text|safe }}
+                                </div>
+                            {% endif %}
+
+                            {% for error in field.errors %}
+                                <p class="field-error" role="alert">
+                                    {{ error }}
+                                </p>
+                            {% endfor %}
+
+                        </div>
+
+                    {% endif %}
+                {% endfor %}
+
+                <button class="btn-primary" type="submit">
+                    Create account
+                </button>
+
+            </form>
+
+            <p class="auth-switch">
+                Already a member?
+                <a href="{% url 'login' %}">Log in</a>
+            </p>
+
         </div>
-
-        <div class="field{% if form.email.errors %} has-error{% endif %}">
-          <label for="{{ form.email.id_for_label }}">{{ form.email.label }}</label>
-          {{ form.email }}
-          {% for error in form.email.errors %}
-            <p class="field-error" role="alert">{{ error }}</p>
-          {% endfor %}
-        </div>
-
-        <div class="field{% if form.phone_number.errors %} has-error{% endif %}">
-          <label for="{{ form.phone_number.id_for_label }}">{{ form.phone_number.label }}</label>
-          {{ form.phone_number }}
-          {% for error in form.phone_number.errors %}
-            <p class="field-error" role="alert">{{ error }}</p>
-          {% endfor %}
-        </div>
-
-        <div class="field{% if form.username.errors %} has-error{% endif %}">
-          <label for="{{ form.username.id_for_label }}">{{ form.username.label }}</label>
-          {{ form.username }}
-          {% for error in form.username.errors %}
-            <p class="field-error" role="alert">{{ error }}</p>
-          {% endfor %}
-        </div>
-
-        <div class="field{% if form.password1.errors %} has-error{% endif %}">
-          <label for="{{ form.password1.id_for_label }}">{{ form.password1.label }}</label>
-          {{ form.password1 }}
-          {% if form.password1.help_text %}
-            <div class="field-help">{{ form.password1.help_text|safe }}</div>
-          {% endif %}
-          {% for error in form.password1.errors %}
-            <p class="field-error" role="alert">{{ error }}</p>
-          {% endfor %}
-        </div>
-
-        <div class="field{% if form.password2.errors %} has-error{% endif %}">
-          <label for="{{ form.password2.id_for_label }}">{{ form.password2.label }}</label>
-          {{ form.password2 }}
-          {% for error in form.password2.errors %}
-            <p class="field-error" role="alert">{{ error }}</p>
-          {% endfor %}
-        </div>
-
-        <button class="btn-primary" type="submit">Create account</button>
-      </form>
-
-      <p class="auth-switch">
-        Already a member? <a href="{% url 'login' %}">Log in</a>
-      </p>
     </div>
-  </div>
 
 </section>
+
 {% endblock %}

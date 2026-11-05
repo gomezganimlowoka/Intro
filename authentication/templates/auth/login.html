@@ -1,53 +1,86 @@
+
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %}Join now{% endblock %}
+{% block title %}Login{% endblock %}
 
 {% block extra_head %}
-  <link rel="stylesheet" href="{% static 'CSS/auth.css' %}">
+<link rel="stylesheet" href="{% static 'CSS/auth.css' %}">
 {% endblock %}
 
 {% block content %}
+
 <section class="auth">
 
-  <aside class="auth-visual">
-    <p class="auth-visual-eyebrow">Become a member</p>
-    <p class="auth-visual-title">Start<br>training<br>today.</p>
-    <p class="auth-visual-text">Create your account to follow your routines and keep track of your subscription.</p>
-  </aside>
+    <aside class="auth-visual">
+        <p class="auth-visual-eyebrow">Welcome back</p>
 
-  <div class="auth-panel">
-    <div class="auth-card">
-      <h1 class="auth-title">Join now</h1>
-      <p class="auth-sub">It only takes a minute to create your account.</p>
+        <p class="auth-visual-title">
+            Your<br>
+            fitness<br>
+            journey.
+        </p>
 
-      <form class="auth-form" method="post" novalidate>
-        {% csrf_token %}
+        <p class="auth-visual-text">
+            Log in to access your workouts,
+            manage your routines and track your progress.
+        </p>
+    </aside>
 
-        {% if form.non_field_errors %}
-          <div class="auth-alert" role="alert">
-            {% for error in form.non_field_errors %}<p>{{ error }}</p>{% endfor %}
-          </div>
-        {% endif %}
+    <div class="auth-panel">
+        <div class="auth-card">
 
-        <div class="field-row">
-          {% include "partials/form_field.html" with field=form.first_name %}
-          {% include "partials/form_field.html" with field=form.last_name %}
+            <h1 class="auth-title">Welcome back</h1>
+
+            <p class="auth-sub">
+                Enter your credentials to access your account.
+            </p>
+
+            <form class="auth-form" method="POST">
+                {% csrf_token %}
+
+                {% if form.non_field_errors %}
+                    <div class="auth-alert" role="alert">
+                        {% for error in form.non_field_errors %}
+                            <p>{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
+                {% for field in form %}
+
+                    <div class="field {% if field.errors %}has-error{% endif %}">
+
+                        <label for="{{ field.id_for_label }}">
+                            {{ field.label }}
+                        </label>
+
+                        {{ field }}
+
+                        {% for error in field.errors %}
+                            <p class="field-error" role="alert">
+                                {{ error }}
+                            </p>
+                        {% endfor %}
+
+                    </div>
+
+                {% endfor %}
+
+                <button class="btn-primary" type="submit">
+                    Log in
+                </button>
+
+            </form>
+
+            <p class="auth-switch">
+                Don't have an account?
+                <a href="{% url 'register' %}">Create account</a>
+            </p>
+
         </div>
-
-        {% include "partials/form_field.html" with field=form.email %}
-        {% include "partials/form_field.html" with field=form.username %}
-        {% include "partials/form_field.html" with field=form.password1 %}
-        {% include "partials/form_field.html" with field=form.password2 %}
-
-        <button class="btn-primary" type="submit">Create account</button>
-      </form>
-
-      <p class="auth-switch">
-        Already a member? <a href="{% url 'login' %}">Log in</a>
-      </p>
     </div>
-  </div>
 
 </section>
+
 {% endblock %}
